@@ -17,76 +17,47 @@ function configurar_menu($pagina = '')
     $menu_item['is_active'] = ($pagina == "usuarios") ? TRUE : FALSE;
     $menu_item['href'] = route_to('usuarios');
     $menu_item['icon'] = 'fa fa-users';
-    $menu_item['text'] = 'Usuarios';
+    $menu_item['text'] = 'Inquilinos';
     $menu_item['submenu'] = array();
     $menu['usuario'] = $menu_item;
 
     //Opción boletos
     $menu_item['is_active'] = ($pagina == "boletos") ? TRUE : FALSE;
     $menu_item['href'] = route_to('boletos');
-    $menu_item['icon'] = 'fa fa-file';
-    $menu_item['text'] = 'Boletos';
+    $menu_item['icon'] = 'fa fa-building';
+    $menu_item['text'] = 'Departamento';
     $menu_item['submenu'] = array();
     $menu['boletos'] = $menu_item;
 
     //Opción proyecciones
-    $menu_item['is_active'] = ($pagina == "proyeccion") ? TRUE : FALSE;
+    $menu_item['is_active'] = ($pagina == "proyecciones") ? TRUE : FALSE;
     $menu_item['href'] = route_to('proyeccion');
-    $menu_item['icon'] = 'fa fa-camera-retro';
-    $menu_item['text'] = 'Proyecciones';
+    $menu_item['icon'] = 'fa fa-donate';
+    $menu_item['text'] = 'Pago';
     $menu_item['submenu'] = array();
     $menu['proyeccion'] = $menu_item;
-
-    //Opción peliculas
-    $menu_item['is_active'] = ($pagina == "peliculas") ? TRUE : FALSE;
-    $menu_item['icon'] = 'fa fa-film';
-    $menu_item['href'] = '#';
-    $menu_item['text'] = 'Películas';
-    $menu_item['submenu'] = array();
-    //Submenu
-    $sub_menu_item = array();
-    $sub_menu_item['is_active'] = '';#($pagina == "peliculas") ? TRUE : FALSE;
-    $sub_menu_item['href'] = route_to('peliculas_Familiares');
-    $sub_menu_item['icon'] = 'fa fa-child';
-    $sub_menu_item['text'] = 'Familiares';
-    $menu_item['submenu']['familiares'] = $sub_menu_item;
-    //
-    $sub_menu_item = array();
-    $sub_menu_item['is_active'] = '';#($pagina == "peliculas") ? TRUE : FALSE;
-    $sub_menu_item['href'] = route_to('peliculas_Comedia');
-    $sub_menu_item['icon'] = 'fa fa-smile-o';
-    $sub_menu_item['text'] = 'Comedia';
-    $menu_item['submenu']['comedia'] = $sub_menu_item;
-    //
-    $sub_menu_item = array();
-    $sub_menu_item['is_active'] = ''; #($pagina == "peliculas") ? TRUE : FALSE;
-    $sub_menu_item['href'] = route_to('peliculas_Accion');
-    $sub_menu_item['icon'] = 'fa fa-car';
-    $sub_menu_item['text'] = 'Acción';
-    $menu_item['submenu']['accion'] = $sub_menu_item;
-    $menu['peliculas'] = $menu_item;
     
     //Opción sucursales
     $menu_item['is_active'] = ($pagina == "sucursales") ? TRUE : FALSE;
     $menu_item['href'] = route_to('sucursales');
-    $menu_item['icon'] = 'fa fa-building';
-    $menu_item['text'] = 'Sucursales';
+    $menu_item['icon'] = 'fa fa-business-time';
+    $menu_item['text'] = 'Trabajador';
     $menu_item['submenu'] = array();
     $menu['sucursales'] = $menu_item;
 
     //Opción salas
     $menu_item['is_active'] = ($pagina == "salas") ? TRUE : FALSE;
     $menu_item['href'] = route_to('salas');
-    $menu_item['icon'] = 'fa fa-play-circle';
-    $menu_item['text'] = 'Salas de cine';
+    $menu_item['icon'] = 'fa fa-address-book';
+    $menu_item['text'] = 'Administrador';
     $menu_item['submenu'] = array();
     $menu['salas'] = $menu_item;
 
     //Opción contacto
-    $menu_item['is_active'] = ($pagina == "contacto") ? TRUE : FALSE;
+    $menu_item['is_active'] = ($pagina == "") ? TRUE : FALSE;
     $menu_item['href'] = route_to('contacto');
     $menu_item['icon'] = 'fa fa-id-card';
-    $menu_item['text'] = 'Comentarios';
+    $menu_item['text'] = 'Queja';
     $menu_item['submenu'] = array();
     $menu['contacto'] = $menu_item;
 

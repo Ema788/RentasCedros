@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="<?php echo base_url(RECURSOS_PANEL_PLUGINS . 'toastr/toastr.min.css'); ?>">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="<?php echo base_url(RECURSOS_PANEL_PLUGINS . 'overlayScrollbars/css/OverlayScrollbars.min.css'); ?>">
-  <link rel="shortcut icon" href="<?php echo base_url(RECURSOS_PORTAL_IMG . 'boletosLogo.png') ?>">
+  <link rel="shortcut icon" href="<?php echo base_url(RECURSOS_PORTAL_IMG . 'edi.png') ?>">
 
   <!-- *********************************************** -->
     <!-- ********* CSS ESPECÍFICOS DE LA VISTA ********* -->
@@ -40,7 +40,7 @@
 
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
-      <img class="animation__shake" src="<?php echo base_url(RECURSOS_PORTAL_IMG . 'boletosLogo.png') ?>" alt="AdminLTELogo" height="60" width="60">
+      <img class="animation__shake" src="<?php echo base_url(RECURSOS_PORTAL_IMG . 'edi.png') ?>" alt="AdminLTELogo" height="60" width="60">
     </div>
 
     <!-- Navbar -->
@@ -51,7 +51,6 @@
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fa fa-navicon"></i></a>
         </li>
       </ul>
-
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
         <!-- Fullscreen -->
@@ -80,7 +79,8 @@
       <a href="index3.html" class="brand-link">
         <!-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" -->
         <!-- style="opacity: .8"> -->
-        <span class="brand-text font-weight-light">C I N E 2 . 0</span>
+        <img class="animation__shake" src="<?php echo base_url(RECURSOS_PORTAL_IMG . 'edi.png') ?>" alt="Rentas" height="60" width="60">
+        <span class="brand-text font-weight-light">Rentas Cedros</span>
       </a>
 
       <!-- Sidebar -->

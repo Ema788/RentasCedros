@@ -104,6 +104,7 @@ define('RECURSOS_PORTAL_IMG_REGISTRO', '/Portal/imagenesPortal/img/registro/');
 define('RECURSOS_PORTAL_PLUGINS', '/Portal/recursosPortal/plugins/');
 
 define('RECURSOS_USER_CSS', '/User/recursosUser/css/');
+define('RECURSOS_USER_LOGIN_CSS', '/User/recursosUser/css/');
 define('RECURSOS_USER_JS', '/User/recursosUser/js/');
 define('RECURSOS_USER_JS_LOGIN', '/User/recursosUser/js/especificos/');
 define('RECURSOS_USER_IMG', '/User/imagenesUser/img/');

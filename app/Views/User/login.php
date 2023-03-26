@@ -111,7 +111,7 @@ element.style {
                     </div>
 
                     <div class="login100-more" style="background-image">
-                    <img src="<?php echo base_url(RECURSOS_USER_IMG_REGISTRO . 'Edifios.jpg') ?>" width="938" height="745">
+                    <img src="<?php echo base_url(RECURSOS_USER_IMG_REGISTRO . 'Edificios.jpg') ?>" width="938" height="745">
                     </div>
                 </div>
             </div>

@@ -15,8 +15,8 @@
                 $acceso = in_array($tarea_actual, ACCESO_ADMINISTRADOR);
                 break;
                 
-            case ROL_CLIENTE['clave']:
-                $acceso = in_array($tarea_actual, ACCESO_CLIENTE);
+            case ROL_INQUILINO['clave']:
+                $acceso = in_array($tarea_actual, ACCESO_INQUILINO);
                 break;
 
             case ROL_OPERADOR['clave']:

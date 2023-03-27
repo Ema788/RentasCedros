@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CINE 2.0 | <?= $nombrePagina ?></title>
+  <title>CEDRO | <?= $nombrePagina ?></title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -48,7 +48,7 @@
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fa fa-navicon"></i></a>
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fa fa-bars"></i></a>
         </li>
       </ul>
       <!-- Right navbar links -->
@@ -88,9 +88,10 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
+          <img src="<?= $fotoPerfil ?>" class="img-circle elevation-2" alt="User Image">      
           </div>
           <div class="info">
-            <b><a class="d-block" href="<?=route_to('perfil') ?>"><?= $nombreUsuario ?></a></b>
+            <b><a class="d-block" href="<?=route_to('perfil') ?>"><?= $nombre_administrador ?></a></b>
             <a href="<?=route_to('perfil') ?>" class="d-block"><?= $rol?></a>
           </div>
         </div>
@@ -136,7 +137,7 @@
 
 
     <footer class="main-footer">
-      <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+      <strong>Copyright &copy; 2023</strong>
       All rights reserved.
       <div class="float-right d-none d-sm-inline-block">
         <b>Version</b> 3.2.0

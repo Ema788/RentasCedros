@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-header">
                     <center>
-                        <h3 class="card-title">Lista de boletos vendidos</h3>
+                        <h3 class="card-title">Lista de departamentos</h3>
                     </center>
                 </div>
                 <div class="card-body">
@@ -24,14 +24,10 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Usuario</th>
-                                <th>Num asientos</th>
-                                <th>Fecha</th>
-                                <th>Precio</th>
-                                <th>Pelicula</th>
-                                <th>Hora</th>
-                                <th>Sala</th>
-                                <th>Sucursal</th>
+                                <th>Numero de departamento</th>
+                                <th>Numero de muebles</th>
+                                <th>Descripcion</th>
+                                <th>Estatus</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,14 +39,18 @@
                                     $html .= '
                                     <tr>
                                         <td>' . ++$numero . '</td>
-                                        <td>' . $boletoRegistrado->nombre . ' ' . $boletoRegistrado->aP . ' ' . $boletoRegistrado->aM . '</td>
-                                        <td>' . $boletoRegistrado->asiento . '</td>
-                                        <td>' . $boletoRegistrado->fecha . '</td>
-                                        <td>'.$boletoRegistrado->precio.'</td>
-                                        <td>'.$boletoRegistrado->nombrePelicula.'</td>
-                                        <td>' . $boletoRegistrado->horaEmpieza . ' - ' . $boletoRegistrado->horaFinaliza . '</td>
-                                        <td>'.$boletoRegistrado->tipoSala.'</td>
-                                        <td>'.$boletoRegistrado->nombreSucursal.'</td>
+                                        <td>' . $boletoRegistrado->numero_departamento . '</td>
+                                        <td>' . $boletoRegistrado->numero_muebles_departamento . '</td>
+                                        <td>' . $boletoRegistrado->descripcion_departamento . '</td>
+                                        <td>';
+                                    if ($boletoRegistrado->estatus_departamento == 0) {
+                                        $html .= 'Ocupado';
+                                    } //end if 
+                                    else {
+                                        $html .= 'Disponible';
+                                    } //end else
+                                    $html .= '
+                                    </td>
                                     </tr>
                                     ';
                                 } //end foreach usuarios

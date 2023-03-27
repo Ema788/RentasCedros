@@ -15,7 +15,7 @@
       <div class="card">
         <div class="card-header">
           <center>
-            <h3 class="card-title">Lista de las salas de cada sucursal</h3>
+            <h3 class="card-title">Lista de los administradores</h3>
           </center>
         </div>
         <div class="card-body">
@@ -23,8 +23,10 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Sucursal</th>
-                <th>Número de salas</th>
+                <th></th>
+                <th>Administrador</th>
+                <th>Email</th>
+                <th>Rol</th>
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -35,19 +37,32 @@
               // print("<pre>".print_r($usuarios, true)."</pre>");
 
               //Verificamos que la variable ya este creada y que el tamaño debe de ser mayor a 0 - los registrps
-              if (isset($salas) && sizeof($salas) > 0) {
+              if (isset($usuarios) && sizeof($usuarios) > 0) {
                 //contador
                 $num = 0;
                 //foreach rompe el arreglo de usuarios que va mostrando la informacion
-                foreach ($salas as $salas) {
+                foreach ($usuarios as $usuario) {
+                  $foto_perfil = (
+                    ($usuario->sexo_administrador == SEXO_MASCULINO['clave']) ? base_url(RECURSOS_PANEL_IMG_USUARIOS . "male.webp")
+                    : base_url(RECURSOS_PANEL_IMG_USUARIOS . "female.png"));
                   $html .= '
-                                                <tr>
-                                                    <td>' . ++$num . '</td>
-                                                    <td>' . $salas["nombreSucursal"] . '</td>
-                                                    <td>' . $salas["cantidad"] . '</td>
+                      <tr>
+                          <td>' . ++$num . '</td>
+                          <td><img class="" width="50px" src="' . $foto_perfil . '"></td>
+                                                    <td>' . $usuario->nombre_administrador . ' ' . $usuario->apellido_paterno_administrador . ' ' . $usuario->apellido_materno_administrador . '</td>
+                                                    <td>' . $usuario->email_administrador . '</td>
+                                                    <td>' . $usuario->nombre_rol . '</td>
                                                     <td>';
-                  $html .= ' <a href="./salas_Detalles.php?idSucursal=' . $salas["idSucursal"] . '" class="btn btn-warning btn-sm">Ver salas</a>
-                                                    </td>
+                  if ($usuario->estatus_administrador == ESTATUS_DESHABILITADO) {
+                    $html .= '<button href="" class="btn btn-success estatus" id="' . $usuario->idAdministrador   . '_' . ESTATUS_HABILITADO . '"><i class="fas fa-universal-access"></i> Habilitar</button>';
+                  } //end if 
+                  else {
+                    $html .= '<button href="" class="btn btn-dark estatus" id="' . $usuario->idAdministrador   . '_' . ESTATUS_DESHABILITADO . '"><i class="fas fa-low-vision"></i> Deshabilitar</button>';
+                  } //end else
+                  $html .= '
+                              <a href="' . route_to("usuario_detalles", $usuario->idAdministrador  ) . '" class="btn btn-warning text-white"><i class="fas fa-info-circle"></i> Detalles</a>
+                              <button class="btn btn-danger eliminar" id="'.$usuario->idAdministrador  .'"><i class="fas fa-times-circle"></i> Eliminar</button>
+                          </td>
                                                 </tr>
                                               ';
                 } //end foreach

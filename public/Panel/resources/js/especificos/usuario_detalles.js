@@ -4,11 +4,7 @@ $("#foto_perfil").change(function () {
   });
 
 $(function () {
-    $.validator.setDefaults({
-    submitHandler: function () {
-        alert("Form successful submitted!");
-    },
-    });
+
     $("#form_usuariDetalles").validate({
     rules: {
         name: {

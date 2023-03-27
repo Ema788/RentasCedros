@@ -53,6 +53,10 @@ $routes->get('/cerrarSesion', 'User\CerrarSesion::index', ['as' => 'cerrarSesion
 //REGISTRAR USUARIO
 $routes->post('/registrarUsuario', 'Panel\Usuario_Nuevo::registrar', ['as' => 'registrarUsuario']);
 
+$routes->post('/registrarAlquiler', 'Panel\Proyeccion_Nuevo::registrar', ['as' => 'registrarAlquiler']);
+
+$routes->post('/registrarDepartamento', 'Panel\Boleto_Nuevo::registrar', ['as' => 'registrarDepartamento']);
+
 //REGISTRAR NUEVA PELICULA 
 $routes->post('/nuevaPelicula', 'Panel\Pelicula_Familiar_Nueva::nuevaPeli', ['as' => 'nuevaPelicula']);
 
@@ -61,6 +65,7 @@ $routes->post('/nuevaPelicula', 'Panel\Pelicula_Familiar_Nueva::nuevaPeli', ['as
 //$routes->get('/panel', 'Panel::panelIndex');
 //dashboard - index del panel de administracion
 $routes->get('/dashboard', 'Panel\Dashboard::index', ['as' => 'dashboard']);
+$routes->get('/dashboard2', 'Panel\Dashboard2::index', ['as' => 'dashboard2']);
 
 //usuarios - vista de todos los usuarios registrados
 $routes->get('/dashboard/usuarios', 'Panel\Usuarios::index', ['as' => 'usuarios']);

@@ -18,7 +18,7 @@
       <div class="card">
         <div class="card-header">
           <center>
-            <h3 class="card-title">Lista de Usuarios</h3>
+            <h3 class="card-title">Lista de inquilinos</h3>
           </center>
         </div>
         <div class="card-body">
@@ -26,9 +26,12 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Foto de perfil</th>
-                <th>Usuario</th>
-                <th>Rol</th>
+                <th></th>
+                <th>Nombre del inquilino</th>
+                <th>Email</th>
+                <th>Telefono</th>
+                <th>Contacto de emergencia</th>
+                <th>Num departamento</th>
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -38,25 +41,28 @@
                 $html = '';
                 $numero = 0;
                 foreach ($usuarios as $usuario) {
-                  $foto_perfil = (!is_null($usuario->imagenUsuario)) ? base_url(RECURSOS_PANEL_IMG_USUARIOS . "/" . $usuario->imagenUsuario) : (
-                    ($usuario->sexoUsuario == SEXO_MASCULINO['clave']) ? base_url(RECURSOS_PANEL_IMG_USUARIOS . "male.webp")
+                  $foto_perfil = (
+                    ($usuario->sexo_inquilino == SEXO_MASCULINO['clave']) ? base_url(RECURSOS_PANEL_IMG_USUARIOS . "male.webp")
                     : base_url(RECURSOS_PANEL_IMG_USUARIOS . "female.png"));
                   $html .= '
                       <tr>
                           <td>' . ++$numero . '</td>
                           <td><img class="" width="50px" src="' . $foto_perfil . '"></td>
-                          <td>' . $usuario->nombre . ' ' . $usuario->aP . ' ' . $usuario->aM . '</td>
-                          <td>' . $usuario->rol . '</td>
+                          <td>' . $usuario->nombre_inquilino . ' ' . $usuario->apellido_paterno_inquilino . ' ' . $usuario->apellido_materno_inquilino . '</td>
+                          <td>' . $usuario->email_inquilino . '</td>
+                          <td>' . $usuario->numero_telefono_inquilino . '</td>
+                          <td>' . $usuario->conctacto_emergencia_inquilino . '</td>
+                          <td>' . $usuario->numero_departamento  . '</td>
                           <td>';
-                  if ($usuario->estatus_usuario == ESTATUS_DESHABILITADO) {
-                    $html .= '<button href="" class="btn btn-success estatus" id="' . $usuario->idUsuario . '_' . ESTATUS_HABILITADO . '"><i class="fas fa-universal-access"></i> Habilitar</button>';
+                  if ($usuario->estatus_inquilino == ESTATUS_DESHABILITADO) {
+                    $html .= '<button href="" class="btn btn-success estatus" id="' . $usuario->idInquilino  . '_' . ESTATUS_HABILITADO . '"><i class="fas fa-universal-access"></i> Habilitar</button>';
                   } //end if 
                   else {
-                    $html .= '<button href="" class="btn btn-dark estatus" id="' . $usuario->idUsuario . '_' . ESTATUS_DESHABILITADO . '"><i class="fas fa-low-vision"></i> Deshabilitar</button>';
+                    $html .= '<button href="" class="btn btn-dark estatus" id="' . $usuario->idInquilino  . '_' . ESTATUS_DESHABILITADO . '"><i class="fas fa-low-vision"></i> Deshabilitar</button>';
                   } //end else
                   $html .= '
-                              <a href="' . route_to("usuario_detalles", $usuario->idUsuario) . '" class="btn btn-warning text-white"><i class="fas fa-info-circle"></i> Detalles</a>
-                              <button class="btn btn-danger eliminar" id="'.$usuario->idUsuario.'"><i class="fas fa-times-circle"></i> Eliminar</button>
+                              <a href="' . route_to("usuario_detalles", $usuario->idInquilino ) . '" class="btn btn-warning text-white"><i class="fas fa-info-circle"></i> Detalles</a>
+                              <button class="btn btn-danger eliminar" id="'.$usuario->idInquilino .'"><i class="fas fa-times-circle"></i> Eliminar</button>
                           </td>
                       </tr>
                       ';

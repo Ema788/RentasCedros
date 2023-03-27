@@ -45,9 +45,9 @@ class Login extends BaseController
         //d($password);
 
         //CARGAR MODELO
-        $tabla_Usuarios = new \App\Models\Tabla_usuarios;
+        $tabla_administradores = new \App\Models\Tabla_usuarios;
         //instancia de la clase         recibe parametros
-        $usuario = $tabla_Usuarios->validar_Usuario($email, $password);
+        $usuario = $tabla_administradores->validar_Usuario($email, $password);
         //debugea la informacion pero para el flujo cuando lo encuentra
         //dd($usuario);
         //PARA ACCEDER A UN ATRIBUTO DE LA ENTIDAD
@@ -59,22 +59,20 @@ class Login extends BaseController
         $session = session();
 
         if ($usuario != null) {
-            if ($usuario->estatus_usuario == ESTATUS_HABILITADO) {
+            if ($usuario->estatus_administrador == ESTATUS_HABILITADO) {
                 $session->set("sesion iniciada", TRUE);
                 $session->set("modulo_permitido", TRUE);
-                $session->set("idUsuario", $usuario->idUsuario);
-                $session->set("estatus_usuario", $usuario->estatus_usuario);
-                $session->set("nombre", $usuario->nombre);
-                $session->set("aP", $usuario->aP);
-                $session->set("aM", $usuario->aM);
-                $session->set("correo", $usuario->correo);
-                $session->set("password", $usuario->password);
-                $session->set("imagenUsuario", $usuario->imagenUsuario);
-                $session->set("idRol", $usuario->idRol);
-                $session->set("rol", $usuario->rol);
+                $session->set("idAdministrador", $usuario->idAdministrador);
+                $session->set("estatus_administrador", $usuario->estatus_administrador);
+                $session->set("nombre_administrador", $usuario->nombre_administrador);
+                $session->set("apellido_paterno_administrador", $usuario->apellido_paterno_administrador);
+                $session->set("apellido_materno_administrador", $usuario->apellido_materno_administrador);
+                $session->set("email_administrador", $usuario->email_administrador);
+                $session->set("password_administrador", $usuario->password_administrador);
+                $session->set("rol", $usuario->nombre_rol);
                 $session->set("tarea_actual",TAREA_DASHBOARD);
                 //$session->set("rol", $usuario->rol);
-                mensaje("Bienvenido " . $session->nombre, ALERT_INFO, 2000);
+                mensaje("Bienvenido " . $session->nombre_administrador, ALERT_INFO, 2000);
                 return redirect()->to(route_to('dashboard'));
             } else {
                 mensaje("El usuario se encuentra deshabilitado. Contacta al administrador", ALERT_DANGER, 2000);

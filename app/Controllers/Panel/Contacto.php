@@ -36,18 +36,13 @@ class Contacto extends BaseController
         return view($nombreVista, $datos);
     }
 
-    private function fotoPerfilM($idUsuario = NULL)
+    private function fotoPerfilM($idAdministrador = NULL)
     {
         $tabla_usuarios = new \App\Models\Tabla_usuarios;
-
-        if (!empty($tabla_usuarios->imagenPerfil($idUsuario))) {
-            return $tabla_usuarios->imagenPerfil($idUsuario);
+        if ($tabla_usuarios->sexoUsuario($idAdministrador) == '2') {
+            return MALE;
         } else {
-            if ($tabla_usuarios->sexoUsuario($idUsuario) == '2') {
-                return MALE;
-            } else {
-                return FEMALE;
-            }
+            return FEMALE;
         }
     }
 
@@ -55,19 +50,18 @@ class Contacto extends BaseController
     {
         $datos = array();
         //DATOS FUNDAMENTALES PARA LA PLANTILLA
-        $datos['nombrePagina'] = 'Contacto';
+        $datos['nombrePagina'] = 'Quejas';
 
-        $session = session();
         //--VARIABLES DE SESION--//
-        $datos['nombreUsuario'] = ($session->get('nombre') . ' ' . $session->get('aP') . ' ' . $session->get('aM'));
-        $datos['rol'] = $session->get('rol');
-        $datos['idUsuario'] = $this->session->get('idUsuario');
-        $datos['fotoPerfil'] = base_url(RECURSOS_PANEL_IMG_USUARIOS . $this->fotoPerfilM($datos['idUsuario']));
+        $datos['nombre_administrador'] = ($this->session->get('nombre_administrador') . ' ' . $this->session->get('apellido_paterno_administrador') . ' ' . $this->session->get('apellido_materno_administrador'));
+        $datos['rol'] = $this->session->get('rol');
+        $datos['idAdministrador'] = $this->session->get('idAdministrador');
+        $datos['fotoPerfil'] = base_url(RECURSOS_PANEL_IMG_USUARIOS . $this->fotoPerfilM($datos['idAdministrador']));
 
         //
         $breadcrumb = array(
             array(
-                'tarea' => 'Contacto',
+                'tarea' => 'Quejas',
                 'href' => '#'
             )
         );
@@ -75,19 +69,18 @@ class Contacto extends BaseController
 
         //Instanciar breadcrumb
         $datos['breadcrumb'] = breadcrumb($datos['nombrePagina'], $breadcrumb);
+
         //DATOS PREPROCESADOS
+        $tabla_Usuarios = new \App\Models\Tabla_quejas();
+        $datos['usuarios'] = $tabla_Usuarios->data_table_boletos();
+
         return $datos;
     }
 
     //FUNCION PRINCIPAL
     public function index()
     {
-        //Se verifica si la bandera es true
-        if ($this->permitido) {
             return $this->crear_vista('panel/contacto', $this->cargar_datos());
-        } //end else
-        else {
-            return redirect()->to(route_to('error_401'));
-        } //end else
+        
     }
 }

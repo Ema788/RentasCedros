@@ -36,36 +36,31 @@ class Usuarios extends BaseController
     return view($nombreVista, $datos);
   }
 
-  private function fotoPerfilM($idUsuario = NULL)
+  private function fotoPerfilM($idAdministrador = NULL)
   {
     $tabla_usuarios = new \App\Models\Tabla_usuarios;
-
-    if (!empty($tabla_usuarios->imagenPerfil($idUsuario))) {
-      return $tabla_usuarios->imagenPerfil($idUsuario);
-    } else {
-      if ($tabla_usuarios->sexoUsuario($idUsuario) == '2') {
+      if ($tabla_usuarios->sexoUsuario($idAdministrador) == '2') {
         return MALE;
       } else {
         return FEMALE;
       }
-    }
   }
 
   private function cargar_datos()
   {
     $datos = array();
     //DATOS FUNDAMENTALES PARA LA PLANTILLA
-    $datos['nombrePagina'] = 'Usuarios';
+    $datos['nombrePagina'] = 'Inquilinos';
     $datos['tarea'] = 'Usuarios';
     //--VARIABLES DE SESION--//
-    $datos['nombreUsuario'] = ($this->session->get('nombre') . ' ' . $this->session->get('aP') . ' ' . $this->session->get('aM'));
+    $datos['nombre_administrador'] = ($this->session->get('nombre_administrador') . ' ' . $this->session->get('apellido_paterno_administrador') . ' ' . $this->session->get('apellido_materno_administrador'));
     $datos['rol'] = $this->session->get('rol');
-    $datos['idUsuario'] = $this->session->get('idUsuario');
-    $datos['fotoPerfil'] = base_url(RECURSOS_PANEL_IMG_USUARIOS . $this->fotoPerfilM($datos['idUsuario']));
+    $datos['idAdministrador'] = $this->session->get('idAdministrador');
+    $datos['fotoPerfil'] = base_url(RECURSOS_PANEL_IMG_USUARIOS . $this->fotoPerfilM($datos['idAdministrador']));
     //breadcrumb
     $breadcrumb = array(
       array(
-        'tarea' => 'Usuarios',
+        'tarea' => 'Inquilinos',
         'href' => '#'
       )
     );
@@ -74,8 +69,8 @@ class Usuarios extends BaseController
     $datos['breadcrumb'] = breadcrumb($datos['nombrePagina'], $breadcrumb);
 
     //DATOS PREPROCESADOS
-    $tabla_Usuarios = new \App\Models\Tabla_usuarios;
-    $datos['usuarios'] = $tabla_Usuarios->data_table_usuarios($this->session->idUsuario, ROL_ADMINISTRADOR['clave']);
+    $tabla_Usuarios = new \App\Models\Tabla_inquilinos;
+    $datos['usuarios'] = $tabla_Usuarios->data_table_usuarios();
 
     return $datos;
   }
@@ -84,22 +79,23 @@ class Usuarios extends BaseController
   public function index()
   {
     //Se verifica si la bandera es true
-    if ($this->permitido) {
-      return $this->crear_vista('panel/usuarios', $this->cargar_datos());
-    } //end else
-    else {
-      return redirect()->to(route_to('error_401'));
-    } //end else
+    // if ($this->permitido) {
+    //   return $this->crear_vista('panel/usuarios', $this->cargar_datos());
+    // } //end else
+    // else {
+    //   return redirect()->to(route_to('error_401'));
+    // } //end else
+    return $this->crear_vista('panel/usuarios', $this->cargar_datos());
   }
 
   //FUNCION PARA ACTUALIZAR EL ESTATUS DEL USUARIO
-  public function estatus($idUsuario = 0, $estatus_usuario = 0)
+  public function estatus($idInquilino  = 0, $estatus_inquilino = 0)
   {
     //Modelo
-    $tabla_usuarios = new \App\Models\Tabla_usuarios;
+    $tabla_usuarios = new \App\Models\Tabla_inquilinos();
 
-    if ($tabla_usuarios->existe_usuario_id($idUsuario) == TRUE) {
-      if ($tabla_usuarios->updateEstatus(['estatus_usuario' => $estatus_usuario], $idUsuario) > 0) {
+    if ($tabla_usuarios->existe_usuario_id($idInquilino ) == TRUE) {
+      if ($tabla_usuarios->updateEstatus(['estatus_inquilino' => $estatus_inquilino], $idInquilino ) > 0) {
         mensaje("El estatus del usuario ha sido actualizado exitosamente.", ALERT_SUCCES);
       } //end if se actualiza el usuario
       else {

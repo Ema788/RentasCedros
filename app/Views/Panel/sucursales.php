@@ -12,11 +12,11 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12">
-      <a href="<?= route_to('sucursal_nueva') ?>" class="btn btn-secondary btn-sm">Agregar nueva</a><br><br>
+      <a href="<?= route_to('sucursal_nueva') ?>" class="btn btn-secondary btn-sm">Agregar nuevo</a><br><br>
       <div class="card">
         <div class="card-header">
           <center>
-            <h3 class="card-title">Lista de sucursales de cine</h3>
+            <h3 class="card-title">Lista de trabajadores</h3>
           </center>
         </div>
         <div class="card-body">
@@ -24,7 +24,11 @@
             <thead>
               <tr>
                 <th>#</th>
+                <th></th>
                 <th>Nombre</th>
+                <th>Puesto</th>
+                <th>Rol</th>
+                <th>Jefe inmediato</th>
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -40,13 +44,28 @@
                 $num = 0;
                 //foreach rompe el arreglo de usuarios que va mostrando la informacion
                 foreach ($usuarios as $usuario) {
+                  $foto_perfil = (
+                    ($usuario->sexo_trabajador == SEXO_MASCULINO['clave']) ? base_url(RECURSOS_PANEL_IMG_USUARIOS . "male.webp")
+                    : base_url(RECURSOS_PANEL_IMG_USUARIOS . "female.png"));
                   $html .= '
-                                                <tr>
-                                                    <td>' . ++$num . '</td>
-                                                    <td>' . $usuario["nombreSucursal"] . '</td>
+                      <tr>
+                          <td>' . ++$num . '</td>
+                          <td><img class="" width="50px" src="' . $foto_perfil . '"></td>
+                                                    <td>' . $usuario->nombre_trabajador . ' ' . $usuario->apellido_paterno_trabajador . ' ' . $usuario->apellido_materno_trabajador . '</td>
+                                                    <td>' . $usuario->puesto_trabajador . '</td>
+                                                    <td>' . $usuario->nombre_rol . '</td>
+                                                    <td>' . $usuario->nombre_administrador . ' ' . $usuario->apellido_paterno_administrador . ' ' . $usuario->apellido_materno_administrador . '</td>
                                                     <td>';
-                  $html .= '  <a href="../backend/crud/sucursales/deleteSucursal.php?idSucursal=' . $usuario["idSucursal"] . '" class="btn btn-danger btn-sm">Eliminar</a> 
-                                                    </td>
+                  if ($usuario->estatus_trabajador == ESTATUS_DESHABILITADO) {
+                    $html .= '<button href="" class="btn btn-success estatus" id="' . $usuario->idTrabajador   . '_' . ESTATUS_HABILITADO . '"><i class="fas fa-universal-access"></i> Habilitar</button>';
+                  } //end if 
+                  else {
+                    $html .= '<button href="" class="btn btn-dark estatus" id="' . $usuario->idTrabajador   . '_' . ESTATUS_DESHABILITADO . '"><i class="fas fa-low-vision"></i> Deshabilitar</button>';
+                  } //end else
+                  $html .= '
+                              <a href="' . route_to("usuario_detalles", $usuario->idTrabajador  ) . '" class="btn btn-warning text-white"><i class="fas fa-info-circle"></i> Detalles</a>
+                              <button class="btn btn-danger eliminar" id="'.$usuario->idTrabajador  .'"><i class="fas fa-times-circle"></i> Eliminar</button>
+                          </td>
                                                 </tr>
                                               ';
                 } //end foreach

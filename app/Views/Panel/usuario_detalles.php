@@ -17,7 +17,7 @@
         <!-- jquery validation -->
         <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title">Formulario de usuario detalles</h3>
+            <h3 class="card-title">Detalles de inquilino</h3>
           </div>
           <!-- /.card-header -->
           <!-- form start -->
@@ -36,8 +36,8 @@
                 <label for="exampleInputEmail1">Foto perfil</label>
                 <center>
                   <?php
-                  $foto_perfil = (!is_null($usuario->imagenUsuario)) ? base_url(RECURSOS_PANEL_IMG_USUARIOS . "/" . $usuario->imagenUsuario) : (
-                    ($usuario->sexoUsuario == SEXO_MASCULINO['clave']) ? base_url(RECURSOS_PANEL_IMG_USUARIOS . "male.webp")
+                  $foto_perfil = (
+                    ($usuario->sexo_administrador == SEXO_MASCULINO['clave']) ? base_url(RECURSOS_PANEL_IMG_USUARIOS . "male.webp")
                     : base_url(RECURSOS_PANEL_IMG_USUARIOS . "female.png"));
                   ?>
                   <img src="<?= $foto_perfil; ?>" class="img-rounded" alt="" id="img-preview" width="15%" style="margin-bottom: 10px;">
@@ -48,22 +48,14 @@
                     'name' => 'idUsuario',
                     'class' => 'form-control',
                     'id' => 'idUsuario',
-                    'value' => $usuario->idUsuario
+                    'value' => $usuario->idAdministrador 
                   );
                   echo form_input($data);
-
-                  if (!is_null($usuario->imagenUsuario)) {
-                    $data = array(
-                      'type' => 'hidden',
-                      'name' => 'foto_anterior',
-                      'class' => 'form-control',
-                      'id' => 'foto_anterior',
-                      'value' => $usuario->imagenUsuario
-                    );
-                    echo form_input($data);
-                  }
                   ?>
                 </center>
+              </div>
+              <div class="row">
+                <br>
               </div>
             </div>
             <div class="row">
@@ -77,7 +69,7 @@
                     'class' => 'form-control',
                     'id'    => 'name',
                     'placeholder' => 'Nombre(s)',
-                    'value' => $usuario->nombre
+                    'value' => $usuario->nombre_administrador
                   );
                   echo form_input($data);
                   ?>
@@ -93,7 +85,7 @@
                     'class' => 'form-control',
                     'id'    => 'apellidoPaterno',
                     'placeholder' => 'Apellido Paterno',
-                    'value' => $usuario->aP
+                    'value' => $usuario->apellido_paterno_administrador
                   );
                   echo form_input($data);
                   ?>
@@ -109,7 +101,7 @@
                     'class' => 'form-control',
                     'id'    => 'apellidoMaterno',
                     'placeholder' => 'ApellidoMaterno',
-                    'value' => $usuario->aM
+                    'value' => $usuario->apellido_materno_administrador
                   );
                   echo form_input($data);
                   ?>
@@ -142,7 +134,7 @@
                     'class' => 'form-control',
                     'id'    => 'email',
                     'placeholder' => 'Correo Electronico(ejemplo@gmail.com)',
-                    'value' => $usuario->correo
+                    'value' => $usuario->email_administrador
                   );
                   echo form_input($data);
                   ?>
@@ -157,7 +149,7 @@
                     'class' => 'form-control',
                     'id' => 'sexo'
                   );
-                  echo form_dropdown("sexo", ["" => "Selecciona un sexo"] + SEXO, $usuario->sexoUsuario, $parametros);
+                  echo form_dropdown("sexo", ["" => "Selecciona un sexo"] + SEXO, $usuario->sexo_administrador, $parametros);
                   ?>
                 </div>
               </div>
@@ -195,21 +187,6 @@
                 </div>
               </div>
 
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <label for="exampleInputEmail1">Foto de perfil</label>
-                <?php
-                $data = array(
-                  'type' => 'file',
-                  'name' => 'foto_perfil',
-                  'class' => 'form-control',
-                  'id' => 'foto_perfil',
-                  'placeholder' => '',
-                );
-                echo form_input($data);
-                ?>
-              </div>
             </div>
           </div>
         </div>

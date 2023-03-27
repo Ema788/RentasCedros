@@ -13,11 +13,11 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        <a href="<?= route_to('proyeccion_nueva') ?>" class="btn btn-secondary btn-sm">Agregar nueva</a><br><br>
+        <a href="<?= route_to('proyeccion_nueva') ?>" class="btn btn-secondary btn-sm">Agregar nuevo</a><br><br>
         <div class="card">
           <div class="card-header">
             <center>
-              <h3 class="card-title">Lista de proyecciones</h3>
+              <h3 class="card-title">Lista de pagos pendientes y pagados</h3>
             </center>
           </div>
           <div class="card-body">
@@ -25,10 +25,10 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Película</th>
-                  <th>Horario</th>
-                  <th>Tipo de sala</th>
-                  <th>Sucursal</th>
+                  <th>Inquilino</th>
+                  <th>Otorgado por:</th>
+                  <th>Total</th>
+                  <th>Estatus</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -39,25 +39,38 @@
                 // print("<pre>".print_r($usuarios, true)."</pre>");
 
                 //Verificamos que la variable ya este creada y que el tamaño debe de ser mayor a 0 - los registrps
-                if (isset($usuarios) && sizeof($usuarios) > 0) {
+                if (isset($boletos) && sizeof($boletos) > 0) {
                   //contador
                   $num = 0;
                   //foreach rompe el arreglo de usuarios que va mostrando la informacion
-                  foreach ($usuarios as $usuario) {
+                  foreach ($boletos as $boletos) {
                     $html .= '
                                                 <tr>
                                                     <td>' . ++$num . '</td>
-                                                    <td>' . $usuario["nombrePelicula"] . '</td>
-                                                    <td>' . $usuario["horaProyeccion"] . '</td>
-                                                    <td>' . $usuario["idSala"] . ' ' . $usuario["tipoSala"] . '</td>
-                                                    <td>' . $usuario["nombreSucursal"] . '</td>
+                                                    <td>' . $boletos->nombre_inquilino . ' ' . $boletos->apellido_paterno_inquilino . ' ' . $boletos->apellido_materno_inquilino . '</td>
+                                                    <td>' . $boletos->nombre_administrador . ' ' . $boletos->apellido_paterno_administrador . ' ' . $boletos->apellido_materno_administrador . '</td>
+                                                    <td>' . $boletos->total_pago_alquiler . '</td>
                                                     <td>';
-                    if ($usuario["estatus_proyeccion"] != 1) {
-                      $html .= '   <a href="../backend/crud/proyecciones/updateEstatus.php?idProyeccion=' . $usuario["idProyeccion"] . '&estatus=2" class="btn btn-info btn-sm">Habilitar</a>';
-                    } //end if
-                    else {
-                      $html .= '   <a href="../backend/crud/proyecciones/updateEstatus.php?idProyeccion=' . $usuario["idProyeccion"] . '&estatus=1" class="btn btn-primary btn-sm">Deshabilitar</a>';
-                    } //end else
+                                    if ($boletos->estatus_alquiler == 0) {
+                                        $html .= 'Pendiente';
+                                    } //end if 
+                                    else {
+                                        $html .= 'Pagado';
+                                    } //end else
+                                    $html .= '
+                                    </td>
+                                    <td>';
+                  if ($boletos->estatus_alquiler == ESTATUS_DESHABILITADO) {
+                    $html .= '<button href="" class="btn btn-success estatus" id="' . $boletos->idAlquiler   . '_' . ESTATUS_HABILITADO . '"><i class="fas fa-universal-access"></i> Pagado</button>';
+                  } //end if 
+                  else {
+                    $html .= '<button href="" class="btn btn-dark estatus" id="' . $boletos->idAlquiler   . '_' . ESTATUS_DESHABILITADO . '"><i class="fas fa-low-vision"></i> Sin pagar</button>';
+                  } //end else
+                  $html .= '
+                              <a href="' . route_to("usuario_detalles", $boletos->idAlquiler  ) . '" class="btn btn-warning text-white"><i class="fas fa-info-circle"></i> Detalles</a>
+                          </td>
+                      </tr>
+                                                    ';
                   } //end foreach
                 } //end if 
                 echo $html;

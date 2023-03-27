@@ -1,9 +1,4 @@
 $(function () {
-    $.validator.setDefaults({
-    submitHandler: function () {
-        alert("Form successful submitted!");
-    },
-    });
     $("#form_perfil").validate({
     rules: {
         name: {

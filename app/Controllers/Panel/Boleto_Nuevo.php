@@ -36,18 +36,13 @@ class Boleto_Nuevo extends BaseController
         return view($nombreVista, $datos);
     }
 
-    private function fotoPerfilM($idUsuario = NULL)
+    private function fotoPerfilM($idInquilino = NULL)
     {
         $tabla_usuarios = new \App\Models\Tabla_usuarios;
-
-        if (!empty($tabla_usuarios->imagenPerfil($idUsuario))) {
-            return $tabla_usuarios->imagenPerfil($idUsuario);
+        if ($tabla_usuarios->sexoUsuario($idInquilino) == '2') {
+            return MALE;
         } else {
-            if ($tabla_usuarios->sexoUsuario($idUsuario) == '2') {
-                return MALE;
-            } else {
-                return FEMALE;
-            }
+            return FEMALE;
         }
     }
 
@@ -55,17 +50,17 @@ class Boleto_Nuevo extends BaseController
     {
         $datos = array();
         //DATOS FUNDAMENTALES PARA LA PLANTILLA
-        $datos['nombrePagina'] = 'Boleto Nuevo';
+        $datos['nombrePagina'] = 'Departamento Nuevo';
 
         //--VARIABLES DE SESION--//
-        $datos['nombreUsuario'] = ($this->session->get('nombre') . ' ' . $this->session->get('aP') . ' ' . $this->session->get('aM'));
+        $datos['nombre_administrador'] = ($this->session->get('nombre_administrador') . ' ' . $this->session->get('apellido_paterno_administrador') . ' ' . $this->session->get('apellido_materno_administrador'));
         $datos['rol'] = $this->session->get('rol');
-        $datos['idUsuario'] = $this->session->get('idUsuario');
-        $datos['fotoPerfil'] = base_url(RECURSOS_PANEL_IMG_USUARIOS . $this->fotoPerfilM($datos['idUsuario']));
+        $datos['idAdministrador '] = $this->session->get('idAdministrador ');
+        $datos['fotoPerfil'] = base_url(RECURSOS_PANEL_IMG_USUARIOS . $this->fotoPerfilM($datos['idAdministrador ']));
 
         $breadcrumb = array(
             array(
-                'tarea' => 'Boletos',
+                'tarea' => 'Departamentos',
                 'href' => route_to('boletos')
             ),
             array(
@@ -81,15 +76,48 @@ class Boleto_Nuevo extends BaseController
         return $datos;
     }
 
+    public function registrar()
+    {
+        //Instancia del Modelo
+        $tabla_usuarios = new \App\Models\Tabla_boletos;
+
+        //Se declara el arreglo para almacenar todo los datos
+        $usuario = array();
+        $usuario['estatus_departamento'] = ESTATUS_HABILITADO;
+        $usuario['numero_departamento'] = $this->request->getPost("numero_departamento");
+        $usuario['numero_muebles_departamento'] = $this->request->getPost("numero_muebles_departamento");
+        $usuario['descripcion_departamento	'] = $this->request->getPost("descripcion_departamento");
+
+        //Verificamos si existe un registro previo
+        $encontro = $tabla_usuarios->existe_usuario($usuario['numero_departamento']);
+
+        //Verificamos si el usuario ya existe
+        if ($encontro != FALSE) {
+            mensaje("El departamento " . $usuario['numero_departamento'] . " ya existe", ALERT_WARNING);
+            return $this->index();
+        } //end encontro TRUE
+        else {
+            if ($tabla_usuarios->insert($usuario) > 0) {
+                mensaje("El departamento ha sido registrado exitosamente.", ALERT_SUCCES);
+                return redirect()->to(route_to('boletos'));
+            } //end if inserta el usuario
+            else {
+                mensaje("Hubo un error al registrar el departamento. Intente nuevamente, por favor", ALERT_DANGER);
+                return $this->index();
+            } //end else inserta el usuario
+        } //end else
+    } //end registrar
+
     //FUNCION PRINCIPAL
     public function index()
     {
         //Se verifica si la bandera es true
-        if ($this->permitido) {
-            return $this->crear_vista('panel/boleto_nuevo', $this->cargar_datos());
-        } //end else
-        else {
-            return redirect()->to(route_to('error_401'));
-        } //end else
+        // if ($this->permitido) {
+        //     return $this->crear_vista('panel/boleto_nuevo', $this->cargar_datos());
+        // } //end else
+        // else {
+        //     return redirect()->to(route_to('error_401'));
+        // } //end else
+        return $this->crear_vista('panel/boleto_nuevo', $this->cargar_datos());
     }
 }

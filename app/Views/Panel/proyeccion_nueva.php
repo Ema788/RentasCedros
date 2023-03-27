@@ -17,7 +17,7 @@
         <!-- jquery validation -->
         <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title">Formulario de nueva proyección</h3>
+            <h3 class="card-title">Formulario de nuevo pago</h3>
           </div>
           <!-- /.card-header -->
           <!-- form start -->
@@ -27,81 +27,72 @@
                         enctype envia y procesa informacion mediante los archivos por medio del metodo $_FILES-->
           <!-- <form id="form-usuario" action="../backend/crud/proyecciones/insertProyeccion.php" method="post" enctype="multipart/form-data"> -->
           <?php
-              $attributes = array('id' => 'form_proyeccionNueva');
-              echo form_open('proyeccionNueva', $attributes);
-              ?>  
+          $attributes = array('id' => 'form_proyeccionNueva');
+          echo form_open('registrarAlquiler', $attributes);
+          ?>
           <div class="card-body">
-              <br>
+            <br>
 
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Película que será proyectada</label>
-                    <select class="form-control" name="pelicula">
-                      <option value="">Seleccionar un horario</option>
-                      <?php
-                      $html = '';
-                      if (isset($peliculas) && sizeof($peliculas) > 0) {
-                        foreach ($peliculas as $nomPeliculas) {
-                          $html .= '
-                                  <option value="' . $nomPeliculas['idPelicula'] . '"> ' . $nomPeliculas['nombrePelicula'] . ' </option>
-                                ';
-                        }
-                      }
-                      echo $html;
-                      ?>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Horario</label>
-                    <select class="form-control" name="horario">
-                      <option value="">Seleccionar un horario</option>
-                      <?php
-                      $html = '';
-                      if (isset($horarios) && sizeof($horarios) > 0) {
-                        foreach ($horarios as $horariosPeliculas) {
-                          $html .= '
-                                  <option value="' . $horariosPeliculas['idHorario'] . '">' . $horariosPeliculas['horaProyeccion'] . '</option>
-                                ';
-                        }
-                      }
-                      echo $html;
-                      ?>
-                    </select>
-                  </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Inquilino</label>
+                  <?php
+                  $data = array(
+                    'type'  => 'text',
+                    'name'  => 'inquilino ',
+                    'class' => 'form-control',
+                    'id'    => 'inquilino ',
+                    'placeholder' => 'Nombre del inquilino',
+                    'required' => 'true'
+                  );
+                  echo form_input($data);
+                  ?>
                 </div>
               </div>
-
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Sala</label>
-                    <select class="form-control" name="tipoSala">
-                      <option value="">Seleccionar un rol</option>
-                      <?php
-                      $html = '';
-                      if (isset($tipoSalas) && sizeof($tipoSalas) > 0) {
-                        foreach ($tipoSalas as $tipoSala) {
-                          $html .= '
-                                  <option value="' . $tipoSala['idSala'] . '"> ' . $tipoSala['idSala'] . ' ' . $tipoSala['tipoSala'] . ' ' . $tipoSala['nombreSucursal'] . '</option>
-                                ';
-                        }
-                      }
-                      echo $html;
-                      ?>
-                    </select>
-                  </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Administrador</label>
+                  <?php
+                  $data = array(
+                    'type'  => 'text',
+                    'name'  => 'administrador ',
+                    'class' => 'form-control',
+                    'id'    => 'administrador ',
+                    'placeholder' => 'Nombre del administrador',
+                    'required' => 'true'
+                  );
+                  echo form_input($data);
+                  ?>
                 </div>
               </div>
+            </div>
 
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Total a pagar</label>
+                  <?php
+                  $data = array(
+                    'type'  => 'number',
+                    'name'  => 'total_pago_alquiler',
+                    'class' => 'form-control',
+                    'id'    => 'total_pago_alquiler',
+                    'placeholder' => '3000.00',
+                    'required' => 'true'
+                  );
+                  echo form_input($data);
+                  ?>
+                </div>
+              </div>
             </div>
-            <!-- /.card-body -->
-            <div class="card-footer">
-            <?= form_submit('Guardar', 'Guardar', ['class' => 'form-control btn btn-primary rounded submit px-3'])?>
-              <a href="<?= route_to('proyeccion')?>" class="btn btn-danger">Cancelar</a>
-            </div>
+
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer">
+            <?= form_submit('Guardar', 'Guardar', ['class' => ' btn btn-primary rounded submit px-3']) ?>
+            <a href="<?= route_to('proyeccion') ?>" class="btn btn-danger">Cancelar</a>
+          </div>
           <?php echo form_close(); ?>
         </div>
         <!-- /.card -->

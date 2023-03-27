@@ -36,18 +36,13 @@ class Usuario_Nuevo extends BaseController
         return view($nombreVista, $datos);
     }
 
-    private function fotoPerfilM($idUsuario = NULL)
+    private function fotoPerfilM($idAdministrador = NULL)
     {
         $tabla_usuarios = new \App\Models\Tabla_usuarios;
-
-        if (!empty($tabla_usuarios->imagenPerfil($idUsuario))) {
-            return $tabla_usuarios->imagenPerfil($idUsuario);
+        if ($tabla_usuarios->sexoUsuario($idAdministrador) == '2') {
+            return MALE;
         } else {
-            if ($tabla_usuarios->sexoUsuario($idUsuario) == '2') {
-                return MALE;
-            } else {
-                return FEMALE;
-            }
+            return FEMALE;
         }
     }
 
@@ -55,17 +50,17 @@ class Usuario_Nuevo extends BaseController
     {
         $datos = array();
         //DATOS FUNDAMENTALES PARA LA PLANTILLA
-        $datos['nombrePagina'] = 'Nuevo Usuario';
+        $datos['nombrePagina'] = 'Nuevo inquilino';
 
         //--VARIABLES DE SESION--//
-        $datos['nombreUsuario'] = ($this->session->get('nombre') . ' ' . $this->session->get('aP') . ' ' . $this->session->get('aM'));
+        $datos['nombre_administrador'] = ($this->session->get('nombre_administrador') . ' ' . $this->session->get('apellido_paterno_administrador') . ' ' . $this->session->get('apellido_materno_administrador'));
         $datos['rol'] = $this->session->get('rol');
-        $datos['idUsuario'] = $this->session->get('idUsuario');
-        $datos['fotoPerfil'] = base_url(RECURSOS_PANEL_IMG_USUARIOS . $this->fotoPerfilM($datos['idUsuario']));
+        $datos['idAdministrador'] = $this->session->get('idAdministrador');
+        $datos['fotoPerfil'] = base_url(RECURSOS_PANEL_IMG_USUARIOS . $this->fotoPerfilM($datos['idAdministrador']));
 
         $breadcrumb = array(
             array(
-                'tarea' => 'Usuarios',
+                'tarea' => 'Inquilinos',
                 'href' => route_to('usuarios')
             ),
             array(
@@ -85,48 +80,40 @@ class Usuario_Nuevo extends BaseController
     public function index()
     {
         //Se verifica si la bandera es true
-        if ($this->permitido) {
-            return $this->crear_vista('panel/usuario_nuevo', $this->cargar_datos());
-        } //end else
-        else {
-            return redirect()->to(route_to('error_401'));
-        } //end else
+        // if ($this->permitido) {
+        //     return $this->crear_vista('panel/usuario_nuevo', $this->cargar_datos());
+        // } //end else
+        // else {
+        //     return redirect()->to(route_to('error_401'));
+        // } //end else
+        return $this->crear_vista('panel/usuario_nuevo', $this->cargar_datos());
     }
-
-    private function subir_archivo($path = NULL, $file = NULL)
-    {
-        $file_name = $file->getRandomName();
-        //d($file_name);
-        $file->move($path, $file_name);
-        return $file_name;
-    } //end subir_archivo
 
     //FUNCION PARA AGREGAR UN NUEVO USUARIO
     public function registrar()
     {
         //Instancia del Modelo
-        $tabla_usuarios = new \App\Models\Tabla_usuarios;
+        $tabla_usuarios = new \App\Models\Tabla_inquilinos;
 
         //Se declara el arreglo para almacenar todo los datos
         $usuario = array();
-        $usuario['estatus_usuario'] = ESTATUS_HABILITADO;
-        $usuario['nombre'] = $this->request->getPost("name");
-        $usuario['aP'] = $this->request->getPost("apellidoPaterno");
-        $usuario['aM'] = $this->request->getPost("apellidoMaterno");
-        $usuario['correo'] = $this->request->getPost("email");
-        $usuario['password'] = $this->request->getPost('repassword');
+        $usuario['estatus_inquilino'] = ESTATUS_HABILITADO;
+        $usuario['nombre_inquilino'] = $this->request->getPost("nombre_administrador");
+        $usuario['apellido_paterno_inquilino'] = $this->request->getPost("apellido_paterno_administrador");
+        $usuario['apellido_materno_inquilino	'] = $this->request->getPost("apellido_materno_administrador");
+        $usuario['numero_telefono_inquilino'] = $this->request->getPost("numero_telefono_inquilino");
+        $usuario['conctacto_emergencia_inquilino'] = $this->request->getPost("conctacto_emergencia_inquilino");
+        $usuario['email_inquilino'] = $this->request->getPost("email_administrador");
+        $usuario['password_inquilino'] = $this->request->getPost('password_administrador');
+        $usuario['sexo_inquilino'] = $this->request->getPost("sexo_administrador");
         $usuario['idRol'] = $this->request->getPost("rol");
-        $usuario['sexoUsuario'] = $this->request->getPost("sexo");
 
-        if (!empty($this->request->getFile('foto_perfil')) && $this->request->getFile('foto_perfil')->getSize() > 0) {
-            $usuario['imagenUsuario'] = $this->subir_archivo(RECURSOS_PANEL_IMG_USUARIOS, $this->request->getFile('foto_perfil'));
-        } //end if existe imagen
         //Verificamos si existe un registro previo
-        $encontro = $tabla_usuarios->existe_usuario($usuario['correo']);
+        $encontro = $tabla_usuarios->existe_usuario($usuario['email_inquilino']);
 
         //Verificamos si el usuario ya existe
         if ($encontro != FALSE) {
-            mensaje("El correo " . $usuario['correo'] . " ya existe, por favor ingrese un nuevo correo", ALERT_WARNING, "¡Error al registrar!");
+            mensaje("El correo " . $usuario['email_inquilino'] . " ya existe, por favor ingrese un nuevo correo", ALERT_WARNING, "¡Error al registrar!");
             return $this->index();
         } //end encontro TRUE
         else {

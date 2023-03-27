@@ -13,6 +13,16 @@ class Usuario_Detalles extends BaseController
         return view($nombreVista, $datos);
     }
 
+    private function fotoPerfilM($idAdministrador = NULL)
+    {
+        $tabla_usuarios = new \App\Models\Tabla_usuarios;
+        if ($tabla_usuarios->sexoUsuario($idAdministrador) == '2') {
+            return MALE;
+        } else {
+            return FEMALE;
+        }
+    }
+
     private function cargar_datos($info_usuario = array())
     {
         $datos = array();
@@ -22,19 +32,20 @@ class Usuario_Detalles extends BaseController
 
 
         //--VARIABLES DE SESION--//
-        $datos['nombreUsuario'] = ($session->get('nombre') . ' ' . $session->get('aP') . ' ' . $session->get('aM'));
+        $datos['nombre_administrador'] = ($session->get('nombre_administrador') . ' ' . $session->get('apellido_paterno_administrador') . ' ' . $session->get('apellido_materno_administrador'));
         $datos['rol'] = $session->get('rol');
-        $datos['foto_usuario'] = base_url(RECURSOS_PANEL_IMG_USUARIOS . $session->imagen_usuario);
-        $datos['nombrePagina'] = 'Detalles del usuario';
-        $datos['tarea'] = 'Usuario detalles';
+        $datos['idAdministrador'] = $session->get('idAdministrador');
+        $datos['fotoPerfil'] = base_url(RECURSOS_PANEL_IMG_USUARIOS . $this->fotoPerfilM($datos['idAdministrador']));
+        $datos['nombrePagina'] = 'Detalles del inquilino';
+        $datos['tarea'] = 'Detalles de inquilino';
         //
         $breadcrumb = array(
             array(
-                'tarea' => 'Usuarios',
+                'tarea' => 'Inquilinos',
                 'href' => route_to('usuarios')
             ),
             array(
-                'tarea' => 'Usuario Detalles',
+                'tarea' => 'Detalles de inquilino',
                 'href' => '#'
             )
         );
@@ -48,11 +59,11 @@ class Usuario_Detalles extends BaseController
     } //end cargar datos
 
     //FUNCION PRINCIPAL
-    public function index($idUsuario = 0)
+    public function index($idAdministrador  = 0)
     {
         //instancia al modelo usuarios
         $tabla_usuarios = new \App\Models\Tabla_usuarios;
-        $usuario = $tabla_usuarios->obtener_usuarios($idUsuario);
+        $usuario = $tabla_usuarios->obtener_usuarios($idAdministrador );
 
         //verificamos si no esta vacio 
         if (is_null($usuario)) {
@@ -64,28 +75,6 @@ class Usuario_Detalles extends BaseController
         }
     }
 
-    private function subir_archivo($path = NULL, $file = NULL)
-    {
-        $file_name = $file->getRandomName();
-        //d($file_name);
-        $file->move($path, $file_name);
-        return $file_name;
-    } //end subir_archivo
-
-    //funcion eliminar imagen
-    private function eliminar_archivo($path = NULL, $file = NULL)
-    {
-        if (!empty($file)) {
-            if (file_exists($path . $file)) {
-                unlink($path . $file);
-                return TRUE;
-            } //end if
-        } //end if is_null
-        else {
-            return FALSE;
-        } //end else is_null
-    } //end eliminar_archivo 
-
     public function editar()
     {
         //instancia del modelo
@@ -96,23 +85,19 @@ class Usuario_Detalles extends BaseController
 
         //se declara el arreglo para almacenar los datos 
         $usuario = array();
-        $usuario['nombre'] = $this->request->getPost("name");
-        $usuario['aP'] = $this->request->getPost("apellidoPaterno");
-        $usuario['aM'] = $this->request->getPost("apellidoMaterno");
-        $usuario['correo'] = $this->request->getPost("email");
+        $usuario['nombre_administrador'] = $this->request->getPost("name");
+        $usuario['apellido_paterno_administrador'] = $this->request->getPost("apellidoPaterno");
+        $usuario['apellido_materno_administrador'] = $this->request->getPost("apellidoMaterno");
+        $usuario['email_administrador'] = $this->request->getPost("email");
         $usuario['idRol'] = $this->request->getPost("rol");
-        $usuario['sexoUsuario'] = $this->request->getPost("sexo");
+        $usuario['sexo_administrador'] = $this->request->getPost("sexo");
 
         //verificamos si la contraseña a repetir no esta vacia 
         if (!is_null($this->request->getPost('repassword'))) {
-            $usuario['password'] = $this->request->getPost('repassword');
+            $usuario['password_administrador'] = $this->request->getPost('repassword');
         } //end if
         //verificamos si es el usuario desea cambiar la foto_perfil 
         //dd($tabla_usuarios->imagenPerfil($idUsuario));
-        if (!empty($this->request->getFile('foto_perfil')) && $this->request->getFile('foto_perfil')->getSize() > 0) {
-            $this->eliminar_archivo(RECURSOS_PANEL_IMG_USUARIOS, $tabla_usuarios->imagenPerfil($idUsuario));
-            $usuario['imagenUsuario'] = $this->subir_archivo(RECURSOS_PANEL_IMG_USUARIOS, $this->request->getFile('foto_perfil'));
-        }
         if ($tabla_usuarios->updateDos($usuario, $idUsuario) > 0) {
             mensaje("El usuario ha sido actualizado exitosamente.", ALERT_SUCCES);
             return redirect()->to(route_to('usuarios'));

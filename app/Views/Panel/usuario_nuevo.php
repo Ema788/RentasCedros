@@ -17,7 +17,7 @@
                 <!-- jquery validation -->
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Formulario de usuario nuevo</h3>
+                        <h3 class="card-title">Formulario de inquilino nuevo</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
@@ -47,9 +47,9 @@
                                     <?php
                                     $data = array(
                                         'type'  => 'text',
-                                        'name'  => 'name',
+                                        'name'  => 'nombre_administrador',
                                         'class' => 'form-control',
-                                        'id'    => 'name',
+                                        'id'    => 'nombre_administrador',
                                         'placeholder' => 'Nombre(s)',
                                         'required' => 'true'
                                     );
@@ -64,9 +64,9 @@
                                     <?php
                                     $data = array(
                                         'type'  => 'text',
-                                        'name'  => 'apellidoPaterno',
+                                        'name'  => 'apellido_paterno_administrador',
                                         'class' => 'form-control',
-                                        'id'    => 'apellidoPaterno',
+                                        'id'    => 'apellido_paterno_administrador',
                                         'placeholder' => 'Apellido Paterno',
                                         'required' => 'true'
                                     );
@@ -81,9 +81,9 @@
                                     <?php
                                     $data = array(
                                         'type'  => 'text',
-                                        'name'  => 'apellidoMaterno',
+                                        'name'  => 'apellido_materno_administrador',
                                         'class' => 'form-control',
-                                        'id'    => 'apellidoMaterno',
+                                        'id'    => 'apellido_materno_administrador',
                                         'placeholder' => 'ApellidoPaterno',
                                         'required' => 'true'
                                     );
@@ -115,9 +115,9 @@
                                     <?php
                                     $data = array(
                                         'type'  => 'email',
-                                        'name'  => 'email',
+                                        'name'  => 'email_administrador',
                                         'class' => 'form-control',
-                                        'id'    => 'email',
+                                        'id'    => 'email_administrador',
                                         'placeholder' => 'Correo Electronico(ejemplo@gmail.com)',
                                         'required' => 'true'
                                     );
@@ -132,9 +132,65 @@
                                     <?php
                                     $parametros = array(
                                         'class' => 'form-control',
-                                        'id' => 'sexo'
+                                        'id' => 'sexo_administrador'
                                     );
-                                    echo form_dropdown("sexo", ["" => "Selecciona un sexo"] + SEXO, array(), $parametros);
+                                    echo form_dropdown("sexo_administrador", ["" => "Selecciona un sexo"] + SEXO, array(), $parametros);
+                                    ?>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Numero de departamento</label>
+                                    <?php
+                                    $data = array(
+                                        'type'  => 'text',
+                                        'name'  => 'departamento',
+                                        'class' => 'form-control',
+                                        'id'    => 'departamento',
+                                        'placeholder' => '1-A',
+                                        'required' => 'true'
+                                    );
+                                    echo form_input($data);
+                                    ?>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Numero de telefono</label>
+                                    <!--<input type="email" name="correo" class="form-control" id="correo" placeholder="Correo electrónico">-->
+                                    <?php
+                                    $data = array(
+                                        'type'  => 'text',
+                                        'name'  => 'numero_telefono_inquilino',
+                                        'class' => 'form-control',
+                                        'id'    => 'numero_telefono_inquilino',
+                                        'placeholder' => '1111111111',
+                                        'required' => 'true'
+                                    );
+                                    echo form_input($data);
+                                    ?>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Contacto de emergencia</label>
+                                    <?php
+                                    $data = array(
+                                        'type'  => 'text',
+                                        'name'  => 'conctacto_emergencia_inquilino',
+                                        'class' => 'form-control',
+                                        'id'    => 'conctacto_emergencia_inquilino',
+                                        'placeholder' => '1111111111',
+                                        'required' => 'true'
+                                    );
+                                    echo form_input($data);
                                     ?>
                                 </div>
                             </div>
@@ -166,31 +222,15 @@
                                     <?php
                                     $data = array(
                                         'type'  => 'password',
-                                        'name'  => 'repassword',
+                                        'name'  => 'password_administrador',
                                         'class' => 'form-control',
-                                        'id'    => 'repassword',
+                                        'id'    => 'password_administrador',
                                         'placeholder' => '********',
                                         'required' => 'true'
                                     );
                                     echo form_password($data);
                                     ?>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="exampleInputEmail1">Foto de perfil</label>
-                                <?php
-                                $data = array(
-                                    'type' => 'file',
-                                    'name' => 'foto_perfil',
-                                    'class' => 'form-control',
-                                    'id' => 'foto_perfil',
-                                    'placeholder' => '',
-                                );
-                                echo form_input($data);
-                                ?>
                             </div>
                         </div>
 

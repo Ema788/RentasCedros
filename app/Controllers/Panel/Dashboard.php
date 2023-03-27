@@ -23,7 +23,7 @@ class Dashboard extends BaseController
     //Verifica si el usuario logeado cuenta con los permiso de esta area
     if (comprobar_acceso(TAREA_DASHBOARD)) {
       $this->session->tarea_actual = TAREA_DASHBOARD;
-    } //end if 
+    } //end if
     else {
       $this->permitido = FALSE;
       $this->session->modulo_permitido = FALSE;
@@ -37,19 +37,14 @@ class Dashboard extends BaseController
     return view($nombreVista, $datos);
   }
 
-  private function fotoPerfilM($idUsuario = NULL)
+  private function fotoPerfilM($idAdministrador = NULL)
   {
     $tabla_usuarios = new \App\Models\Tabla_usuarios;
-
-    if (!empty($tabla_usuarios->imagenPerfil($idUsuario))) {
-      return $tabla_usuarios->imagenPerfil($idUsuario);
-    } else {
-      if ($tabla_usuarios->sexoUsuario($idUsuario) == '2') {
+      if ($tabla_usuarios->sexoUsuario($idAdministrador) == '2') {
         return MALE;
       } else {
         return FEMALE;
       }
-    }
   }
 
   private function cargar_datos()
@@ -59,11 +54,11 @@ class Dashboard extends BaseController
     $datos['nombrePagina'] = 'Dashboard';
     $datos['tarea'] = 'Dashboard';
     //--VARIABLES DE SESION--//
-    $datos['nombreUsuario'] = ($this->session->get('nombre') . ' ' . $this->session->get('aP') . ' ' . $this->session->get('aM'));
+    $datos['nombre_administrador'] = ($this->session->get('nombre_administrador') . ' ' . $this->session->get('apellido_paterno_administrador') . ' ' . $this->session->get('apellido_materno_administrador'));
+    $datos['idAdministrador'] = $this->session->get('idAdministrador');
     $datos['rol'] = $this->session->get('rol');
-    $datos['idUsuario'] = $this->session->get('idUsuario');
-    $datos['fotoPerfil'] = base_url(RECURSOS_PANEL_IMG_USUARIOS . $this->fotoPerfilM($datos['idUsuario']));
-
+    //dd($this->fotoPerfilM($datos['idAdministrador']));
+    $datos['fotoPerfil'] = base_url(RECURSOS_PANEL_IMG_USUARIOS . $this->fotoPerfilM($datos['idAdministrador']));
     $breadcrumb = array();
 
     //Instanciar breadcrumb
@@ -76,12 +71,13 @@ class Dashboard extends BaseController
   //FUNCION PRINCIPAL
   public function index()
   {
-    if ($this->permitido) {
-      return $this->crear_vista('panel/dashboard', $this->cargar_datos());
-    } //end else
-    else {
-      // mensaje("No tienes permiso para acceder a este módulo, contacte al administrador", ALERT_WARNING);
-      return redirect()->to(route_to('login'));
-    } //end else
-  }
+  //   if ($this->permitido) {
+  //     return $this->crear_vista('panel/dashboard', $this->cargar_datos());
+  //   } //end else
+  //   else {
+  //     // mensaje("No tienes permiso para acceder a este módulo, contacte al administrador", ALERT_WARNING);
+  //     return redirect()->to(route_to('login'));
+  //   } //end else
+  return $this->crear_vista('panel/dashboard', $this->cargar_datos());
+   }
 }

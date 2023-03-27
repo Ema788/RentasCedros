@@ -9,7 +9,7 @@ function configurar_menu($pagina = '')
     $menu_item['is_active'] = ($pagina == "dashboard") ? TRUE : FALSE;
     $menu_item['href'] = route_to('dashboard');
     $menu_item['icon'] = 'fa fa-home';
-    $menu_item['text'] = 'Dashboard';
+    $menu_item['text'] = 'Inicio';
     $menu_item['submenu'] = array();
     $menu['inicio'] = $menu_item;
 
@@ -25,7 +25,7 @@ function configurar_menu($pagina = '')
     $menu_item['is_active'] = ($pagina == "boletos") ? TRUE : FALSE;
     $menu_item['href'] = route_to('boletos');
     $menu_item['icon'] = 'fa fa-building';
-    $menu_item['text'] = 'Departamento';
+    $menu_item['text'] = 'Departamentos';
     $menu_item['submenu'] = array();
     $menu['boletos'] = $menu_item;
 
@@ -33,7 +33,7 @@ function configurar_menu($pagina = '')
     $menu_item['is_active'] = ($pagina == "proyecciones") ? TRUE : FALSE;
     $menu_item['href'] = route_to('proyeccion');
     $menu_item['icon'] = 'fa fa-donate';
-    $menu_item['text'] = 'Pago';
+    $menu_item['text'] = 'Pagos';
     $menu_item['submenu'] = array();
     $menu['proyeccion'] = $menu_item;
     
@@ -41,7 +41,7 @@ function configurar_menu($pagina = '')
     $menu_item['is_active'] = ($pagina == "sucursales") ? TRUE : FALSE;
     $menu_item['href'] = route_to('sucursales');
     $menu_item['icon'] = 'fa fa-business-time';
-    $menu_item['text'] = 'Trabajador';
+    $menu_item['text'] = 'Trabajadores';
     $menu_item['submenu'] = array();
     $menu['sucursales'] = $menu_item;
 
@@ -49,15 +49,15 @@ function configurar_menu($pagina = '')
     $menu_item['is_active'] = ($pagina == "salas") ? TRUE : FALSE;
     $menu_item['href'] = route_to('salas');
     $menu_item['icon'] = 'fa fa-address-book';
-    $menu_item['text'] = 'Administrador';
+    $menu_item['text'] = 'Administradores';
     $menu_item['submenu'] = array();
     $menu['salas'] = $menu_item;
 
     //Opción contacto
-    $menu_item['is_active'] = ($pagina == "") ? TRUE : FALSE;
+    $menu_item['is_active'] = ($pagina == "contacto") ? TRUE : FALSE;
     $menu_item['href'] = route_to('contacto');
     $menu_item['icon'] = 'fa fa-id-card';
-    $menu_item['text'] = 'Queja';
+    $menu_item['text'] = 'Quejas';
     $menu_item['submenu'] = array();
     $menu['contacto'] = $menu_item;
 

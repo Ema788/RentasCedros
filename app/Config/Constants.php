@@ -129,13 +129,13 @@ define("ALERT_WARNING", 3);
 define("ALERT_INFO", 4);
 
 #CONSTANTES DE LOS ROLES
-define('ROL_CLIENTE', array('clave' => 1, 'rol' => 'Cliente'));
-define('ROL_ADMINISTRADOR', array('clave' => 2, 'rol' => 'Administrador'));
+define('ROL_ADMINISTRADOR', array('clave' => 1, 'rol' => 'Administrador'));
+define('ROL_INQUILINO', array('clave' => 2, 'rol' => 'Inquilino'));
 define('ROL_OPERADOR', array('clave' => 3, 'rol' => 'Operador'));
 
 define("ROLES", array(
-    ROL_CLIENTE["clave"] => ROL_CLIENTE["rol"],
     ROL_ADMINISTRADOR['clave'] => ROL_ADMINISTRADOR['rol'],
+    ROL_INQUILINO["clave"] => ROL_INQUILINO["rol"],
     ROL_OPERADOR['clave'] => ROL_OPERADOR['rol']
 ));
 
@@ -239,7 +239,7 @@ define("ACCESO_OPERADOR", array(
 ));
 
 //CONSTANTES PARA EL ACCESO AL SISTEMA
-define("ACCESO_CLIENTE", array(
+define("ACCESO_INQUILINO", array(
                                 TAREA_DASHBOARD,
                                 TAREA_PERFIL
 ));

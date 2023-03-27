@@ -16,7 +16,7 @@
               <!-- jquery validation -->
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Formulario de usuario Boleto</h3>
+                  <h3 class="card-title">Formulario para añadir un departamento</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
@@ -27,21 +27,21 @@
                 <!-- <form id="form-usuario" action="../backend/crud/boletos/insertBoleto.php" method="post" enctype="multipart/form-data"> -->
                 <?php
                   $attributes = array('id' => 'form_boletoNuevo');
-                  echo form_open('boletoNuevo', $attributes);
+                  echo form_open('registrarDepartamento', $attributes);
                 ?>  
                 <div class="card-body">
                     <br>
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label for="exampleInputEmail1">Peliculas disponibles</label>
+                          <label for="exampleInputEmail1">Numero de departamento</label>
                           <?php
                                         $data = array(
-                                        'type'  => 'email',
-                                        'name'  => 'email',
+                                        'type'  => 'text',
+                                        'name'  => 'numero_departamento',
                                         'class' => 'form-control',
-                                        'id'    => 'email',
-                                        'placeholder' => 'Peliculas disponibles',
+                                        'id'    => 'numero_departamento',
+                                        'placeholder' => '1-A',
                                         'required' => 'true'
                                     );
                                     echo form_input($data);
@@ -56,9 +56,9 @@
                                 $data = array(
                                     'type'  => 'number',
                                     'class' => 'form-control',
-                                    'placeholder' => 'Numero de Asientos',
-                                    'id'    => 'numAsientos',
-                                    'name'  => 'numAsientos',
+                                    'placeholder' => '#',
+                                    'id'    => 'numero_muebles_departamento',
+                                    'name'  => 'numero_muebles_departamento',
                                     'required' => 'true'
                                 );
                                 echo form_input($data);
@@ -67,37 +67,20 @@
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label for="exampleInputEmail1">Fecha</label>
+                          <label for="exampleInputEmail1">Descripcion</label>
                           <!-- <input type="date" name="fechaBoleto" class="form-control" id="fecha" placeholder="fechaBoleto"> -->
                           <?php
                                 $data = array(
-                                    'type'  => 'date',
+                                    'type'  => 'text',
                                     'class' => 'form-control',
-                                    'placeholder' => 'Numero de Asientos',
-                                    'id'    => 'fecha',
-                                    'name'  => 'fecha',
+                                    'placeholder' => 'Descripcion del departamento',
+                                    'id'    => 'descripcion_departamento',
+                                    'name'  => 'descripcion_departamento',
                                     'required' => 'true'
                                 );
                                 echo form_input($data);
                           ?>
                         </div>
-                      </div>
-                    </div>
-
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Horario</label>
-                        <?php
-                                        $data = array(
-                                        'type'  => 'email',
-                                        'name'  => 'email',
-                                        'class' => 'form-control',
-                                        'id'    => 'email',
-                                        'placeholder' => 'Horario',
-                                        'required' => 'true'
-                                    );
-                                    echo form_input($data);
-                                    ?>
                       </div>
                     </div>
 
@@ -107,7 +90,7 @@
               <!-- /.card-body -->
               <div class="card-footer">
                 <!-- <button type="submit" class="btn btn-primary">Registrar</button> -->
-                <?= form_submit('Registrarse', 'Registrarse', ['class' => 'form-control btn btn-primary rounded submit px-3'])?>
+                <?= form_submit('Registrar', 'Registrar', ['class' => ' btn btn-primary rounded submit px-3'])?>
                 <a href="<?= route_to('boletos')?>" class="btn btn-danger">Cancelar</a>
               </div>
               <?php echo form_close(); ?>
